@@ -1,0 +1,10 @@
+{
+  "found": true,
+  "plate": "TST123",
+  "owners": [
+    { "document_type": "Cédula Ciudadanía", "name": "MARIA ALEJANDRA RODRIGUEZ PEREZ", "document_number": "1234567",
+      "ownership_start_date": "2026-08-01", "ownership_end_date": null, "owner_type": "PROPIO" }
+  ],
+  "import_record": { "import_record_number": "10000001", "import_record_date": "2026-06-03" },
+  "guarantee": { "creditor": "BANCO EJEMPLO S.A.", "creditor_document_type": "NIT", "creditor_document_number": "900000001", "registered_date": "2026-08-01", "guarantee_type": "PRENDA" }
+}

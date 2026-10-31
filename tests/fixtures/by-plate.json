@@ -1,0 +1,20 @@
+{
+  "found": true,
+  "plate": "TST123",
+  "vehicle": {
+    "plate": "TST123", "registration_status": "ACTIVO", "service_type": "Particular",
+    "vehicle_class": "CAMIONETA", "classification": "AUTOMOVIL", "body_type": "SUV",
+    "brand": "TESLA", "line": "MODEL Y", "model_year": "2026", "color": "ROJO ULTRA",
+    "fuel_type": "ELECTRICO", "engine_displacement": 0, "doors": 5,
+    "seated_passengers": 5, "total_passengers": null, "axle_count": 2, "gross_weight": null, "load_capacity": null,
+    "vin": "TESTVIN0000000001", "engine_number": null, "chassis_number": "TESTVIN0000000001", "serial_number": null,
+    "traffic_license_number": "10000000", "traffic_authority": "SDM BOGOTA",
+    "registration_date": "2026-08-01", "has_liens": false, "has_pledges": true,
+    "engine_restamped": false, "chassis_restamped": false, "serial_restamped": false, "vin_restamped": false
+  },
+  "pledges": [
+    { "creditor": "BANCO EJEMPLO S.A.", "creditor_document_type": "NIT", "creditor_document_number": "900000001", "registered_date": null, "trust_estate": null }
+  ],
+  "ownership_limitations": [],
+  "armoring": null
+}

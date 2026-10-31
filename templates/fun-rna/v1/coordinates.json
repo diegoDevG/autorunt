@@ -1,0 +1,664 @@
+{
+  "templateId": "fun-rna-v1",
+  "calibrated": false,
+  "fields": {
+    "plate_letters": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "plate_numbers": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "brand": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "line": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "color": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "model_year": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "displacement": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "capacity": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "armor_resolution": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "power": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "body_code": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "body_type": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "engine_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "chassis_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "serial_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "vin": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "import_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "import_day": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "import_month": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "import_year": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "company_name": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "company_nit": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "alert_in_favor_of": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_surname1": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_surname2": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_names": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_doc_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_address": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_city": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "owner_phone": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_surname1": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_surname2": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_names": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_doc_number": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_address": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_city": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "buyer_phone": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "obs_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "obs_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "obs_prerunt_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    },
+    "obs_prerunt_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9,
+      "maxWidth": 0
+    }
+  },
+  "checkboxes": {
+    "tramite_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_3": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_4": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_5": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_6": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_7": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_8": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_9": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_10": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_11": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_12": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_13": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_14": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_15": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_16": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_17": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "tramite_18": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_automovil": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_bus": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_buseta": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_camion": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_camioneta": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_campero": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_microbus": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_tractocamion": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_motocicleta": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_motocarro": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_mototriciclo": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_cuatrimoto": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_volqueta": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "class_otro": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_3": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_4": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_5": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_6": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_7": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "fuel_8": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "armored_yes": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "armored_no": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "desmonte_yes": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "desmonte_no": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_engine_yes": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_engine_no": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_chassis_yes": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_chassis_no": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_serial_yes": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "restamped_serial_no": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_3": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_4": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_5": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "import_6": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_1": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_2": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_3": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_4": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_5": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "service_6": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "alert_theft": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "alert_limitation": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "alert_seizure": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "alert_other": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_C": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_N": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_X": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_P": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_E": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_T": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_U": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "owner_doctype_D": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_C": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_N": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_X": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_P": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_E": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_T": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_U": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    },
+    "buyer_doctype_D": {
+      "x": 0,
+      "y": 0,
+      "size": 9
+    }
+  }
+}

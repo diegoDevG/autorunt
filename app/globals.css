@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #172033;
+  --muted: #566274;
+  --paper: #e8ecf1;
+  --panel: #ffffff;
+  --line: #c6cfdb;
+  --blue: #0b3d91;
+  --signal: #f5c400;
+  --ok: #1e7b4f;
+  --review: #8a5300;
+  --review-bg: #fff1cf;
+  --missing: #a8231b;
+  --missing-bg: #fde4e1;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px/1.45 'IBM Plex Sans Condensed', 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
+}
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+.bar { display: flex; align-items: baseline; gap: 16px; padding: 14px 24px; background: var(--ink); color: #fff; }
+.bar h1 { margin: 0; font-size: 18px; font-weight: 600; }
+.bar p { margin: 0; color: #b9c4d6; flex: 1; }
+.badge { padding: 2px 10px; border-radius: 3px; background: var(--signal); color: var(--ink); font-weight: 600; }
+.badge.live { background: #9be3b8; }
+
+.layout { display: grid; grid-template-columns: minmax(380px, 470px) 1fr; gap: 24px; padding: 24px; align-items: start; }
+.col { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+section { padding: 18px 20px; border-top: 1px solid var(--line); }
+section:first-child { border-top: 0; }
+h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
+h3 { margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: var(--muted); }
+
+label { display: block; font-size: 13px; color: var(--muted); }
+input, select, textarea {
+  width: 100%; margin-top: 3px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 4px;
+  font: inherit; color: var(--ink); background: #fff;
+}
+textarea { min-height: 56px; resize: vertical; }
+.row { display: grid; gap: 10px; margin-bottom: 10px; }
+.row.two { grid-template-columns: 1fr 1fr; }
+.row.three { grid-template-columns: 1fr 1fr 1fr; }
+.row.plate { grid-template-columns: 1fr 90px 1.4fr; }
+
+button {
+  font: inherit; font-weight: 600; padding: 8px 14px; border-radius: 4px; border: 1px solid var(--blue);
+  background: var(--blue); color: #fff; cursor: pointer;
+}
+button.quiet { background: #fff; color: var(--blue); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+.note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+.alert { padding: 8px 10px; border-radius: 4px; margin: 6px 0; font-size: 14px; }
+.alert.block, .alert.error { background: var(--missing-bg); color: var(--missing); }
+.alert.warn { background: var(--review-bg); color: var(--review); }
+.alert.info { background: #eaf0f8; color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; }
+td { padding: 5px 0; border-top: 1px solid #e3e8ef; vertical-align: top; }
+td:first-child { width: 38%; color: var(--muted); }
+td small { display: block; color: var(--muted); }
+.tag { margin-left: 8px; padding: 0 6px; border-radius: 3px; font-size: 12px; font-weight: 600; }
+.tag.review { background: var(--review-bg); color: var(--review); }
+.tag.missing { background: var(--missing-bg); color: var(--missing); }
+.credits { font-weight: 600; }
+
+.preview { position: sticky; top: 16px; }
+.preview iframe { width: 100%; height: calc(100vh - 150px); min-height: 520px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+.empty { display: grid; place-items: center; height: 420px; color: var(--muted); border: 1px dashed var(--line); border-radius: 4px; text-align: center; padding: 20px; }
+.preview .col { padding: 14px; }
+.issues { margin: 10px 0 0; padding: 0; list-style: none; font-size: 13px; }
+.issues li { padding: 3px 0; }
+
+@media (max-width: 1000px) {
+  .layout { grid-template-columns: 1fr; padding: 12px; }
+  .preview { position: static; }
+  .row.two, .row.three, .row.plate { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
