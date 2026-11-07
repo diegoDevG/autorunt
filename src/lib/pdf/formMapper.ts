@@ -1,6 +1,6 @@
 import { FORM_DOC_LETTER, type DocumentType } from '../domain/validators';
 import { norm, type Alerts, type Field, type FormVehicleBlock } from '../domain/normalizer';
-import { getTramite } from '../domain/tramites';
+import { getTramite, requiresCompany } from '../domain/tramites';
 import type { StampValues } from './overlay';
 
 export interface PersonInput {
@@ -97,9 +97,10 @@ export function wrapLines(text: string, max: number, lines: number): { lines: st
   return { lines: out.slice(0, lines), overflow: out.length > lines };
 }
 
-const REQUIRED: (keyof FormVehicleBlock)[] = [
+/** Potencia y código de carrocería no están aquí: son opcionales y pueden quedar en blanco. */
+export const REQUIRED_VEHICLE_FIELDS: (keyof FormVehicleBlock)[] = [
   'plate', 'vehicleClass', 'brand', 'line', 'modelYear', 'color', 'fuel', 'displacement',
-  'capacity', 'bodyType', 'chassisNumber', 'vin', 'serviceType', 'power',
+  'capacity', 'bodyType', 'serviceType',
 ];
 
 export interface BuildArgs {
@@ -120,11 +121,14 @@ export function buildStampValues({ tramiteId, vehicle: v0, alerts, manual }: Bui
   checks.push(`tramite_${tramite.id}`);
 
   // Calidad de los datos del vehículo
-  for (const k of REQUIRED) {
+  for (const k of REQUIRED_VEHICLE_FIELDS) {
     const f = v[k] as Field<unknown>;
     if (f.confidence === 'missing') issues.push({ field: k, level: 'missing', note: f.note ?? 'Falta el dato' });
     else if (f.confidence === 'review') issues.push({ field: k, level: 'review', note: f.note ?? 'Revisar' });
   }
+  // VIN, chasis y serie: basta con que venga uno del RUNT (suelen ser el mismo número).
+  const identifiers = [v.vin, v.chassisNumber, v.serialNumber].filter((f) => f.confidence !== 'missing');
+  if (identifiers.length === 0) issues.push({ field: 'vin', level: 'missing', note: 'Falta VIN, chasis o serie: el RUNT no trae ninguno' });
   for (const k of ['engineNumber', 'serialNumber'] as const) {
     if (v[k].confidence === 'missing') issues.push({ field: k, level: 'info', note: v[k].note ?? 'Sin dato: verificar con la tarjeta de propiedad' });
   }
@@ -172,14 +176,18 @@ export function buildStampValues({ tramiteId, vehicle: v0, alerts, manual }: Bui
     text.company_name = manual.company.name;
     text.company_nit = manual.company.nit;
   }
-  if (has('company') && v.serviceType.value === 2 && !manual.company) {
-    issues.push({ field: 'company', level: 'missing', note: 'Servicio público: falta la empresa vinculadora' });
+  if (has('company') && requiresCompany(v.serviceType.value)) {
+    if (!manual.company?.name) issues.push({ field: 'company', level: 'missing', note: 'Servicio público o especial: falta la empresa vinculadora' });
+    if (!manual.company?.nit) issues.push({ field: 'company.nit', level: 'missing', note: 'Servicio público o especial: falta el NIT de la empresa vinculadora' });
   }
 
   // 21 y 22. Personas
   const person = (prefix: 'owner' | 'buyer', p: PersonInput) => {
-    text[`${prefix}_surname1`] = p.surname1;
-    text[`${prefix}_surname2`] = p.surname2;
+    // Una empresa solo lleva razón social, en la casilla Nombres (confirmado por las oficinas).
+    if (p.documentType !== 'NIT') {
+      text[`${prefix}_surname1`] = p.surname1;
+      text[`${prefix}_surname2`] = p.surname2;
+    }
     text[`${prefix}_names`] = p.names;
     text[`${prefix}_doc_number`] = p.documentNumber;
     text[`${prefix}_address`] = p.address;
@@ -187,7 +195,7 @@ export function buildStampValues({ tramiteId, vehicle: v0, alerts, manual }: Bui
     text[`${prefix}_phone`] = p.phone;
     const letter = FORM_DOC_LETTER[p.documentType];
     if (letter) checks.push(`${prefix}_doctype_${letter}`);
-    else issues.push({ field: `${prefix}.documentType`, level: 'review', note: `${p.documentType} no tiene casilla en el formulario` });
+    else issues.push({ field: `${prefix}.documentType`, level: 'review', note: `${p.documentType} no tiene casilla en el formulario oficial (no hay OTRO en este campo): confirmar con la oficina cómo diligenciarlo` });
     for (const [k, val] of [['names', p.names], ['documentNumber', p.documentNumber], ['address', p.address], ['city', p.city], ['phone', p.phone]] as const) {
       if (!val) issues.push({ field: `${prefix}.${k}`, level: 'missing', note: 'Dato manual pendiente' });
     }

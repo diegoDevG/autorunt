@@ -50,8 +50,11 @@ export const norm = (s: string | null | undefined): string =>
 const ok = <T>(value: T): Field<T> => ({ value, confidence: 'ok' });
 const review = <T>(value: T | null, note: string): Field<T> => ({ value, confidence: 'review', note });
 const missing = <T>(note?: string): Field<T> => ({ value: null, confidence: 'missing', note });
+// Croma devuelve estos textos como relleno cuando el RUNT no tiene el dato: no son valores reales.
+const PLACEHOLDERS = new Set(['', 'NA', 'N/A', 'INDEFINIDO', 'SIN DATO', 'NO APLICA']);
+export const isPlaceholder = (s: string | null | undefined): boolean => PLACEHOLDERS.has(norm(s));
 const text = (s: string | null | undefined): Field<string> =>
-  s && s.trim() ? ok(s.trim()) : missing();
+  isPlaceholder(s) ? missing() : ok(s!.trim());
 
 export function normalizeVehicle(src: VehicleByPlate): FormVehicleBlock {
   const v = src.vehicle;
@@ -64,9 +67,8 @@ export function normalizeVehicle(src: VehicleByPlate): FormVehicleBlock {
   let vehicleClass: Field<string>;
   if (!FORM_CLASSES.has(cls)) {
     vehicleClass = review<string>(null, `Clase sin casilla conocida: ${v.vehicle_class ?? 'vacía'}`);
-  } else if (v.classification && norm(v.classification) !== cls) {
-    vehicleClass = review(cls, `vehicle_class=${cls} difiere de classification=${norm(v.classification)}`);
   } else {
+    // Se usa el valor del RUNT tal cual (vehicle_class). classification es otra clasificación y no se compara.
     vehicleClass = ok(cls);
   }
 
@@ -75,18 +77,15 @@ export function normalizeVehicle(src: VehicleByPlate): FormVehicleBlock {
     ? ok(fuelCode)
     : review<number>(null, `Combustible sin casilla: ${v.fuel_type ?? 'vacío'} (¿híbrido?)`);
 
-  const displacement: Field<number> =
-    v.engine_displacement == null
-      ? missing()
-      : v.engine_displacement === 0 && isElectric
-        ? review(0, 'Eléctrico: cilindrada 0, definir qué se imprime')
-        : ok(v.engine_displacement);
+  // En un eléctrico se imprime 0 (confirmado por las oficinas).
+  const displacement: Field<number> = v.engine_displacement == null ? missing() : ok(v.engine_displacement);
 
   let capacity: Field<{ kind: 'passengers' | 'kg'; value: number }>;
   if (v.total_passengers != null) capacity = ok({ kind: 'passengers', value: v.total_passengers });
-  else if (v.load_capacity != null) capacity = ok({ kind: 'kg', value: v.load_capacity });
+  // Un sedán real llegó con load_capacity = 0: cero no es capacidad de carga.
+  else if (v.load_capacity != null && v.load_capacity > 0) capacity = ok({ kind: 'kg', value: v.load_capacity });
   else if (v.seated_passengers != null) {
-    capacity = review({ kind: 'passengers', value: v.seated_passengers }, 'Derivada de seated_passengers');
+    capacity = ok({ kind: 'passengers', value: v.seated_passengers });
   } else capacity = missing();
 
   // Según la documentación, armoring es null cuando el vehículo no está blindado.
@@ -98,8 +97,9 @@ export function normalizeVehicle(src: VehicleByPlate): FormVehicleBlock {
       })
     : ok({ armored: false, resolution: null, dearmoredDate: null });
 
+  // Croma trae el tipo. El código es opcional: las oficinas aceptan la casilla en blanco.
   const bodyType: Field<{ type: string; code: string | null }> = v.body_type
-    ? review({ type: v.body_type.trim(), code: null }, 'Falta el código de carrocería (tabla de mapeo)')
+    ? ok({ type: v.body_type.trim(), code: null })
     : missing();
 
   const noEngine = isElectric ? 'Eléctrico: sin número de motor en el RUNT' : undefined;
@@ -115,11 +115,12 @@ export function normalizeVehicle(src: VehicleByPlate): FormVehicleBlock {
     displacement,
     capacity,
     armoring,
-    power: missing('Potencia no viene del RUNT'),
+    // No viene del RUNT y es opcional: las oficinas aceptan la casilla en blanco.
+    power: { value: null, confidence: 'ok', note: 'Opcional: no viene del RUNT' },
     bodyType,
-    engineNumber: v.engine_number ? ok(v.engine_number) : missing(noEngine),
+    engineNumber: isPlaceholder(v.engine_number) ? missing(noEngine) : ok(v.engine_number!.trim()),
     chassisNumber: text(v.chassis_number),
-    serialNumber: v.serial_number ? ok(v.serial_number) : missing('Serie sin dato en el RUNT'),
+    serialNumber: isPlaceholder(v.serial_number) ? missing('Serie sin dato en el RUNT') : ok(v.serial_number!.trim()),
     vin: text(v.vin),
     restamped: ok({
       engine: v.engine_restamped,

@@ -1,5 +1,5 @@
 import { runLookup } from '../lib/domain/lookup';
-import { getTramite } from '../lib/domain/tramites';
+import { getTramite, requiresCompany } from '../lib/domain/tramites';
 import type { Alerts, FormVehicleBlock } from '../lib/domain/normalizer';
 import { splitColombianName } from '../lib/domain/name';
 import { blockFromManual, buildStampValues, type Issue, type ManualInput, type PersonInput } from '../lib/pdf/formMapper';
@@ -67,12 +67,11 @@ export async function buildSample(scenarioId: string, tramiteId: number): Promis
     surname1: isCompany ? '' : ownerSplit.surname1, surname2: isCompany ? '' : ownerSplit.surname2,
     names: isCompany ? scn.ownerName : ownerSplit.names, ...scn.ownerContact,
   };
-  const publicService = vehicle.serviceType.value === 2;
   const manual: ManualInput = {
     owner, power: scn.power,
     ...(tramite.sections.includes('buyer') ? { buyer: BUYER } : {}),
     ...(tramite.sections.includes('import') ? { import: { kind: 2 as const, number: scn.history.import_record?.import_record_number ?? '11870099', date: scn.history.import_record?.import_record_date ?? '2024-01-10' } } : {}),
-    ...(publicService ? { company: { name: 'COOTRANSYOPAL LTDA', nit: '900555111' } } : {}),
+    ...(requiresCompany(vehicle.serviceType.value) ? { company: { name: 'COOTRANSYOPAL LTDA', nit: '900555111' } } : {}),
     ...INTENT[tramiteId],
   };
   const { values, issues } = buildStampValues({ tramiteId, vehicle, alerts, manual });

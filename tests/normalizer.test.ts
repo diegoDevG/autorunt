@@ -16,17 +16,25 @@ describe('normalizeVehicle (eléctrico con prenda)', () => {
     expect(b.vin.value).toBe('TESTVIN0000000001');
     expect(b.restamped.value).toEqual({ engine: false, chassis: false, serial: false, vin: false });
   });
-  it('clase: prevalece vehicle_class y se pide revisión por discrepancia', () => {
+  it('clase: usa vehicle_class del RUNT sin pedir revisión aunque classification difiera', () => {
     expect(b.vehicleClass.value).toBe('CAMIONETA');
-    expect(b.vehicleClass.confidence).toBe('review');
+    expect(b.vehicleClass.confidence).toBe('ok');
   });
   it('capacidad derivada de seated_passengers, cilindrada 0 y carrocería sin código', () => {
-    expect(b.capacity).toMatchObject({ value: { kind: 'passengers', value: 5 }, confidence: 'review' });
-    expect(b.displacement).toMatchObject({ value: 0, confidence: 'review' });
-    expect(b.bodyType).toMatchObject({ value: { type: 'SUV', code: null }, confidence: 'review' });
+    expect(b.capacity).toEqual({ value: { kind: 'passengers', value: 5 }, confidence: 'ok' });
+    expect(b.displacement).toEqual({ value: 0, confidence: 'ok' });
+    expect(b.bodyType).toEqual({ value: { type: 'SUV', code: null }, confidence: 'ok' });
   });
-  it('faltantes: potencia, motor y serie', () => {
-    expect(b.power.confidence).toBe('missing');
+  it('capacidad: load_capacity 0 no es carga, usa pasajeros', () => {
+    const sedan = { ...src, vehicle: { ...src.vehicle!, total_passengers: null, seated_passengers: 5, load_capacity: 0 } } as VehicleByPlate;
+    expect(normalizeVehicle(sedan).capacity).toEqual({ value: { kind: 'passengers', value: 5 }, confidence: 'ok' });
+    const camion = { ...src, vehicle: { ...src.vehicle!, total_passengers: null, seated_passengers: 3, load_capacity: 6500 } } as VehicleByPlate;
+    expect(normalizeVehicle(camion).capacity).toEqual({ value: { kind: 'kg', value: 6500 }, confidence: 'ok' });
+  });
+  it('potencia opcional: queda en blanco sin pedir revisión', () => {
+    expect(b.power).toMatchObject({ value: null, confidence: 'ok' });
+  });
+  it('faltantes: motor y serie', () => {
     expect(b.engineNumber.confidence).toBe('missing');
     expect(b.engineNumber.note).toMatch(/Eléctrico/);
     expect(b.serialNumber.confidence).toBe('missing');
@@ -37,6 +45,25 @@ describe('normalizeVehicle (eléctrico con prenda)', () => {
   it('combustible desconocido (híbrido) pide revisión', () => {
     const hib = { ...src, vehicle: { ...src.vehicle!, fuel_type: 'HIBRIDO' } } as VehicleByPlate;
     expect(normalizeVehicle(hib).fuel).toMatchObject({ value: null, confidence: 'review' });
+  });
+});
+
+describe('valores de relleno de Croma', () => {
+  it('NA, INDEFINIDO y vacíos cuentan como faltantes, no como datos', () => {
+    const relleno = {
+      ...src,
+      vehicle: { ...src.vehicle!, color: 'INDEFINIDO', engine_number: 'NA', vin: 'N/A', chassis_number: 'N/A', serial_number: '', brand: 'na' },
+    } as VehicleByPlate;
+    const b = normalizeVehicle(relleno);
+    expect(b.color).toMatchObject({ value: null, confidence: 'missing' });
+    expect(b.engineNumber.confidence).toBe('missing');
+    expect(b.chassisNumber.confidence).toBe('missing');
+    expect(b.serialNumber.confidence).toBe('missing');
+    expect(b.brand.confidence).toBe('missing');
+  });
+  it('un dato real con espacios se conserva recortado', () => {
+    const real = { ...src, vehicle: { ...src.vehicle!, engine_number: '  7919101 7 ' } } as VehicleByPlate;
+    expect(normalizeVehicle(real).engineNumber).toEqual({ value: '7919101 7', confidence: 'ok' });
   });
 });
 
@@ -75,5 +102,15 @@ describe('campos de intención', () => {
     expect(mvp).toEqual([2]);
     expect(getTramite(2).mvp).toBe(true);
     expect(getTramite(12).mvp).toBe(false);
+  });
+});
+
+describe('VIN, chasis y serie: se usan como vienen del RUNT', () => {
+  it('no se copian entre sí: cada campo conserva su valor', () => {
+    const v = { ...src, vehicle: { ...src.vehicle!, vin: 'VIN0000000000001', chassis_number: 'NA', serial_number: '0012024' } } as VehicleByPlate;
+    const b = normalizeVehicle(v);
+    expect(b.chassisNumber.confidence).toBe('missing');
+    expect(b.serialNumber).toEqual({ value: '0012024', confidence: 'ok' });
+    expect(b.vin).toEqual({ value: 'VIN0000000000001', confidence: 'ok' });
   });
 });

@@ -38,6 +38,9 @@ export const TRAMITES: TramiteConfig[] = [
   { id: 18, slug: 'otros', name: 'Otros', sections: ['vehicle', 'owner', 'observations'], intentFields: [], needsRunt: false, mvp: false },
 ];
 
+/** Servicios que exigen empresa vinculadora y NIT (campo 19): público (2) y especial (5). */
+export const requiresCompany = (serviceType: number | null | undefined): boolean => serviceType === 2 || serviceType === 5;
+
 export function getTramite(id: number): TramiteConfig {
   const t = TRAMITES.find((x) => x.id === id);
   if (!t) throw new Error(`Trámite desconocido: ${id}`);

@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "label": "Carro particular, propietario con C.C., sin gravámenes",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 2,
+    "label": "Motocicleta",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 3,
+    "label": "Propietario con NIT (enviar sin dígito de verificación)",
+    "plate": "",
+    "documentType": "NIT",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 4,
+    "label": "Vehículo con prenda",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 5,
+    "label": "Vehículo con embargo o limitación",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 6,
+    "label": "Eléctrico o híbrido",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 7,
+    "label": "Servicio público",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 8,
+    "label": "Matriculado antes del RUNT",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 9,
+    "label": "Cédula que no es del propietario",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 10,
+    "label": "Placa inexistente",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 11,
+    "label": "Misma consulta repetida (caché)",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "repeat"
+  },
+  {
+    "id": 12,
+    "label": "Dos consultas simultáneas",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "concurrent"
+  },
+  {
+    "id": 13,
+    "label": "Blindado o con número regrabado",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 14,
+    "label": "Copropietarios",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 15,
+    "label": "Propietario con C.E. o PPT",
+    "plate": "",
+    "documentType": "CE",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 16,
+    "label": "Matrícula cancelada o inactiva",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 17,
+    "label": "Clase y classification distintas",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 18,
+    "label": "Híbrido, si el caso 6 fue eléctrico",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 19,
+    "label": "Nombre con partículas o compuesto",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  },
+  {
+    "id": 20,
+    "label": "Remolque o placa atípica, si las oficinas los manejan",
+    "plate": "",
+    "documentType": "CC",
+    "documentNumber": "",
+    "mode": "normal"
+  }
+]

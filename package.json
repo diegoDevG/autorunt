@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "grid": "tsx scripts/grid.ts",
     "dev-template": "tsx scripts/make-dev-template.ts",
-    "samples": "tsx scripts/render-samples.ts"
+    "samples": "tsx scripts/render-samples.ts",
+    "spike": "tsx scripts/spike/run.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.0",

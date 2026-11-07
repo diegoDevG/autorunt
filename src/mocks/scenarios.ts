@@ -78,7 +78,7 @@ const bank: Pledge = { creditor: 'BANCO EJEMPLO S.A.', creditor_document_type: '
 export const SCENARIOS: Scenario[] = [
   scenario({ id: 'car-gasoline-clean', description: 'Automóvil a gasolina, sin gravámenes', plate: 'ABC123', ownerName: 'LUIS FERNANDO GOMEZ RUIZ', power: 85 }),
   scenario({
-    id: 'ev-pledge', description: 'Camioneta eléctrica con prenda (caso real del spike, anonimizado)', plate: 'TST123',
+    id: 'ev-pledge', description: 'Camioneta eléctrica con prenda', plate: 'TST123',
     ownerName: 'MARIA ALEJANDRA RODRIGUEZ PEREZ', ownerDoc: '1234567', power: 220,
     vehicle: { vehicle_class: 'CAMIONETA', classification: 'AUTOMOVIL', body_type: 'SUV', brand: 'TESLA', line: 'MODEL Y', model_year: '2026', color: 'ROJO ULTRA', fuel_type: 'ELECTRICO', engine_displacement: 0, total_passengers: null, engine_number: null, serial_number: null, vin: 'TESTVIN0000000001', chassis_number: 'TESTVIN0000000001', traffic_authority: 'SDM BOGOTA' },
     pledges: [bank],

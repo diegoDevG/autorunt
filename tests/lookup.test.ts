@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import byPlate from './fixtures/by-plate.json';
 import history from './fixtures/history.json';
-import { runLookup } from '../src/lib/domain/lookup';
+import { runLookup, soatStatus } from '../src/lib/domain/lookup';
 import type { RuntPort } from '../src/lib/croma/client';
 import type { VehicleByPlate, VehicleHistory } from '../src/lib/croma/types';
 
@@ -56,6 +56,11 @@ describe('runLookup', () => {
     expect(r.status === 'ok' && r.owner.name).toBeNull();
     expect(r.status === 'ok' && r.warnings.map((w) => w.code)).toContain('OWNER_MISMATCH');
   });
+  it('propietario con NIT: la razón social no se separa en apellidos', async () => {
+    const empresa = { ...history, owners: [{ ...history.owners[0], name: 'Transportes del Llano S A S', document_number: '900123456' }] };
+    const r = await runLookup(port({ hist: empresa }).p, { ...base, documentType: 'NIT', documentNumber: '900123456' });
+    expect(r.status === 'ok' && r.owner.name).toEqual({ surname1: '', surname2: '', names: 'TRANSPORTES DEL LLANO S A S', confidence: 'high' });
+  });
   it('historial caído degrada a nombre manual sin fallar', async () => {
     const r = await runLookup(port({ histFails: true }).p, base);
     expect(r.status).toBe('ok');
@@ -65,5 +70,45 @@ describe('runLookup', () => {
   it('levanta prenda con prenda inscrita pasa', async () => {
     const r = await runLookup(port().p, { ...base, tramiteId: 12 });
     expect(r.status).toBe('ok');
+  });
+});
+
+describe('runLookup: etapas y nombre ausente', () => {
+  it('informa cada etapa en orden', async () => {
+    const { p } = port();
+    const stages: string[] = [];
+    await runLookup(p, base, (s) => stages.push(s));
+    expect(stages).toEqual(['validating', 'gate', 'history']);
+  });
+  it('si Croma no trae el nombre del propietario, avisa en vez de fallar', async () => {
+    const noName = { ...history, owners: history.owners.map((o) => ({ ...o, name: null, document_number: base.documentNumber })) };
+    const { p } = port({ hist: noName });
+    const r = await runLookup(p, base);
+    expect(r.status).toBe('ok');
+    if (r.status !== 'ok') return;
+    expect(r.owner.name).toBeNull();
+    expect(r.warnings.map((w) => w.code)).toContain('OWNER_NAME_MISSING');
+    expect(r.warnings.map((w) => w.code)).not.toContain('HISTORY_UNAVAILABLE');
+  });
+});
+
+describe('SOAT y secretaría de matrícula', () => {
+  const pol = (over: Record<string, unknown>) => ({ policy_number: '1', insurer: 'ASEG', is_current: true, start_date: '2026-08-12', expiry_date: '2027-08-11', ...over });
+  it('vigente si la póliza actual no ha vencido', () => {
+    expect(soatStatus([pol({})] as never, '2026-11-06')).toEqual({ status: 'vigente', insurer: 'ASEG', expiresAt: '2027-08-11' });
+  });
+  it('vencido si la fecha ya pasó', () => {
+    expect(soatStatus([pol({ is_current: false, expiry_date: '2026-08-07' })] as never, '2026-11-06').status).toBe('vencido');
+  });
+  it('sin registro cuando no hay pólizas', () => {
+    expect(soatStatus([] as never, '2026-11-06')).toEqual({ status: 'sin_registro', insurer: null, expiresAt: null });
+    expect(soatStatus(undefined, '2026-11-06').status).toBe('sin_registro');
+  });
+  it('informa la secretaría de matrícula aunque coincida con la oficina', async () => {
+    const { p } = port();
+    const r = await runLookup(p, { ...base, officeAuthority: 'SDM BOGOTA' });
+    if (r.status !== 'ok') throw new Error('se esperaba ok');
+    expect(r.registrationAuthority).toBe(byPlate.vehicle.traffic_authority ?? null);
+    expect(r.warnings.map((w) => w.code)).toContain('REGISTRATION_AUTHORITY');
   });
 });

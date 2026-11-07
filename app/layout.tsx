@@ -1,6 +1,6 @@
 import './globals.css';
 
-export const metadata = { title: 'Banco de pruebas del formulario' };
+export const metadata = { title: 'Formulario de tránsito' };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 *.csv
+
+# spike con Croma: respuestas crudas con datos personales
+/spike-data/

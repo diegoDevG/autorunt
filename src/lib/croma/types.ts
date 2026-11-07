@@ -63,6 +63,17 @@ export interface VehicleRecord {
   vin_restamped: boolean;
 }
 
+export interface SoatPolicy {
+  policy_number: string;
+  insurer: string;
+  is_current: boolean;
+  issue_date?: string | null;
+  start_date: string; // AAAA-MM-DD
+  expiry_date: string; // AAAA-MM-DD
+  origin?: string | null;
+  tariff_type?: string | null;
+}
+
 export interface VehicleByPlate {
   found: boolean;
   plate: string;
@@ -70,6 +81,7 @@ export interface VehicleByPlate {
   pledges: Pledge[];
   ownership_limitations: OwnershipLimitation[];
   armoring: Armoring | null;
+  soat_policies?: SoatPolicy[];
 }
 
 export interface HistoryOwner {

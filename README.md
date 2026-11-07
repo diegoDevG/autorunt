@@ -42,5 +42,26 @@ npm test               # incluye la matriz de cobertura de los 18 trámites
 
 Para pasar de simulado a real: cambiar `MockRuntPort` por `new CromaClient({ apiKey })` en el servicio; el resto no cambia.
 
+## Spike con Croma
+Corre los casos de la sección 12 del alcance contra la API real y evalúa sus criterios. Todo lo generado queda en `spike-data/`, fuera de git, porque las respuestas crudas tienen datos personales.
+
+1. Pon `CROMA_API_KEY` en `.env.local`.
+2. Copia los casos y llena placas y documentos autorizados por sus propietarios (los casos vacíos se omiten):
+   ```
+   mkdir -p spike-data && cp scripts/spike/cases.example.json spike-data/cases.json
+   ```
+3. Revisa el plan, que no llama a Croma, y luego ejecuta por tandas (`--ask-credits` pide los créditos consumidos en el panel en cada caso, no el contador de Requests, que incluye los sondeos):
+   ```
+   npm run spike
+   npm run spike -- --only 1 --yes --ask-credits
+   ```
+
+Resultado: `spike-data/report.md` (criterios, valores crudos para los mapeos y contrato observado, sin datos personales), `raw/` (respuestas completas: borrar al terminar) y `fixtures/` (anonimizados, para revisar y mover a `tests/fixtures`). `--wait N` cambia la espera en línea (por defecto 8 s).
+
+### Estado del spike (cerrado con pendientes)
+- Medidos: casos 1, 3, 4, 9, 10 y 11 (con caché), más reintentos del caso 3.
+- Hallazgos: consulta por placa con NIT sin dígito de verificación devuelve `job_failed` en el caso 3 (cobrado, 10 créditos por intento); un vehículo de empresa llegó con propietario sin nombre; Croma devuelve `"NA"` e `"INDEFINIDO"` como relleno; los fallos (`job_failed`) y los no encontrados cobran 10 créditos.
+- Pendientes: casos 2, 5, 6, 7, 8 y 12 a 20 (faltan placas y documentos autorizados); caso 21 no se corre (es una medición repetida, no una consulta nueva); cache duration y condiciones comerciales de Croma por confirmar.
+
 ## Pendiente (siguientes slices)
 Rutas API (`/api/lookups`, `/api/forms/:id/pdf`), Auth y UI, panel admin, cron de purga, pruebas doradas del PDF.
